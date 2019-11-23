@@ -1,6 +1,13 @@
-const test = number => number + 1;
+const fs = require('fs');
 
-console.log(
-  'test(3):',
-  test(3)
-);
+const inputText = fs.readFileSync('./input.txt').toString('utf-8');
+const frequencyChanges = inputText.split('\n');
+
+let currentFrequency = 0;
+
+for (let i = 0; i < frequencyChanges.length; i += 1) {
+  const frequencyChange = parseInt(frequencyChanges[i]);
+  currentFrequency += frequencyChange;
+}
+
+console.log('FINAL ANSWER:', currentFrequency);
