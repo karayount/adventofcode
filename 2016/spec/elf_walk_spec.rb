@@ -24,7 +24,7 @@ describe 'ElfWalk' do
     end
   
     it 'day 1 part 1' do
-      input = reader.read_input_to_flattened_array('./input/day_1_input.txt')
+      input = reader.read_input_to_flattened_array('./input/day_01_input.txt')
   
       elf_walk = ElfWalk.new(input)
       expect(elf_walk.blocks_away).to eql(278)
@@ -39,7 +39,7 @@ describe 'ElfWalk' do
     end
   
     it 'day 1 part 2' do
-      input = reader.read_input_to_flattened_array('./input/day_1_input.txt')
+      input = reader.read_input_to_flattened_array('./input/day_01_input.txt')
   
       elf_walk = ElfWalk.new(input)
       expect(elf_walk.first_to_visit_twice).to eql(161)

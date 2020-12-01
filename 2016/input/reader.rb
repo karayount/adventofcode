@@ -12,6 +12,17 @@ class Reader
     all.to_ary.flatten
   end
 
+  def read_input_to_array(file)
+    f = File.open(file, 'r')
+    lines = []
+
+    f.each_line do |line|
+      lines << line
+    end
+
+    lines
+  end
+
   # def read_input_to_number_set(file)
   #   f = File.open(file, "r")
   #   all = Set.new

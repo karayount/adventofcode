@@ -1,101 +1,79 @@
-class ElfWalk
+class BathroomCode
   def initialize(input)
-    @x = 1
-    @y = 1
-    @heading = 0
-    @steps = input
-    @visited = {}
+    @position = 5
+    @instructions = input
+    @code = []
+    @x = 2
+    @y = 0
   end
 
-  def blocks_away
-    @steps.each do |step|
-      turn = step[0]
-      step_count = step[1..-1].to_s.to_i
-      move(turn, @heading, step_count, @x, @y)
+
+  def move_numerical_keypad(direction)
+    isAllTheWayLeft = @position % 3 == 1
+    isAllTheWayRight = @position %3 == 0
+    isAtTop = @position < 4
+    isAtBottom = @position > 6
+
+    if direction == 'L' && !isAllTheWayLeft
+      @position -= 1
+    elsif direction == 'R' && !isAllTheWayRight
+      @position += 1
+    elsif direction == 'U' && !isAtTop
+      @position -= 3
+    elsif direction == 'D' && !isAtBottom
+      @position += 3
     end
 
-    @x.abs + @y.abs
+    @position
   end
 
-  def first_to_visit_twice
-    @steps.each do |step|
-      turn = step[0]
-      step_count = step[1..-1].to_s.to_i
-      @heading = which_way(turn, @heading)
-
-      x = @x
-      y = @y
-
-      case @heading
-        when 0
-          (1..step_count).each do |i|
-            if @visited[@x] && @visited[@x].include?(y+i)
-              @y = y+i
-              return @x.abs + @y.abs
-            end
-            update_visits(@x, y+i)
-          end
-          @y += step_count
-        when 1
-          (1..step_count).each do |i|
-            if @visited[x+i] && @visited[x+i].include?(@y)
-              @x = x+i
-              return @x.abs + @y.abs
-            end
-            update_visits(x+i, @y)
-          end
-          @x += step_count
-        when 2
-          (1..step_count).each do |i|
-            if @visited[@x] && @visited[@x].include?(y-i)
-              @y = y-i
-              return @x.abs + @y.abs
-            end
-            update_visits(@x, y-i)
-          end
-          @y -= step_count
-        when 3
-          (1..step_count).each do |i|
-            if @visited[@x-i] && @visited[x-i].include?(@y)
-              @x = x-i
-              return @x.abs + @y.abs
-            end
-            update_visits(x-i, @y)
-          end
-          @x -= step_count
+  def numerical_keypad_code
+    @instructions.each do |directions|
+      moves = directions.split('')
+      moves.each do |direction|
+        move_numerical_keypad(direction)
       end
+      @code.push(@position)
     end
 
-    @x.abs + @y.abs
+    @code.join('')
   end
 
-  def update_visits(x, y)
-    if @visited[x]
-      @visited[x] << y
-    else
-      @visited[x] = [y]
+  def move_fancy_keypad(direction)
+    fancy_keypad = [
+      [nil, nil, '1', nil, nil],
+      [nil, '2', '3', '4', nil],
+      ['5', '6', '7', '8', '9'],
+      [nil, 'A', 'B', 'C', nil],
+      [nil, nil, 'D', nil, nil]
+    ]
+
+    if direction == 'L' && fancy_keypad[@x][@y-1]
+      @position = fancy_keypad[@x][@y-1]
+      @y -= 1
+    elsif direction == 'R' && fancy_keypad[@x][@y+1]
+      @position = fancy_keypad[@x][@y+1]
+      @y += 1
+    elsif direction == 'U' && fancy_keypad[@x-1][@y]
+      @position = fancy_keypad[@x-1][@y]
+      @x -= 1
+    elsif direction == 'D' && fancy_keypad[@x+1][@y]
+      @position = fancy_keypad[@x+1][@y]
+      @x += 1
     end
+
+    @position
   end
 
-  def move(turn, heading, step_count, x, y)
-    @heading = which_way(turn, heading)
-    case @heading
-      when 0 # north
-        @y = y + step_count
-      when 1 # east
-        @x = x + step_count
-      when 2 # south
-        @y = y - step_count
-      when 3 # west
-        @x = x - step_count
+  def fancy_keypad_code
+    @instructions.each do |directions|
+      moves = directions.split('')
+      moves.each do |direction|
+        move_fancy_keypad(direction)
+      end
+      @code.push(@position)
     end
-  end
 
-  def which_way(turn, heading)
-    if turn == 'L'
-      heading == 0 ? 3 : heading - 1
-    elsif turn == 'R'
-      heading == 3 ? 0 : heading + 1
-    end
+    @code.join('')
   end
 end
