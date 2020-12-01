@@ -48,16 +48,16 @@ class BathroomCode
       [nil, nil, 'D', nil, nil]
     ]
 
-    if direction == 'L' && fancy_keypad[@x][@y-1]
+    if direction == 'L' && @y > 0 && fancy_keypad[@x][@y-1]
       @position = fancy_keypad[@x][@y-1]
       @y -= 1
-    elsif direction == 'R' && fancy_keypad[@x][@y+1]
+    elsif direction == 'R' && @y < 4 && fancy_keypad[@x][@y+1]
       @position = fancy_keypad[@x][@y+1]
       @y += 1
-    elsif direction == 'U' && fancy_keypad[@x-1][@y]
+    elsif direction == 'U' && @x > 0 && fancy_keypad[@x-1][@y]
       @position = fancy_keypad[@x-1][@y]
       @x -= 1
-    elsif direction == 'D' && fancy_keypad[@x+1][@y]
+    elsif direction == 'D' && @x < 4 && fancy_keypad[@x+1][@y]
       @position = fancy_keypad[@x+1][@y]
       @x += 1
     end

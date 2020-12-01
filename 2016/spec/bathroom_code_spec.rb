@@ -11,7 +11,7 @@ describe 'BathroomCode' do
       bathroom_code = BathroomCode.new(example_input)
       expect(bathroom_code.numerical_keypad_code).to eql('1985')
     end
-  
+
     it 'day 2 part 1' do
       bathroom_code = BathroomCode.new(txt_input)
       expect(bathroom_code.numerical_keypad_code).to eql('36629')
@@ -23,7 +23,7 @@ describe 'BathroomCode' do
       bathroom_code = BathroomCode.new(example_input)
       expect(bathroom_code.fancy_keypad_code).to eql('5DB3')
     end
-  
+
     it 'day 2 part 2' do
       bathroom_code = BathroomCode.new(txt_input)
       expect(bathroom_code.fancy_keypad_code).to eql('99C3D')
