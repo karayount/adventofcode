@@ -23,25 +23,18 @@ class Reader
     lines
   end
 
-  # def read_input_to_number_set(file)
-  #   f = File.open(file, "r")
-  #   all = Set.new
+  def read_input_to_number_arrays(file)
+    f = File.open(file, "r")
+    all = []
 
-  #   f.each_line do |line|
-  #     all.add(line.to_i)
-  #   end
+    f.each_line do |line|
+      nums = line.split
+      nums = nums.map do |num|
+        num.to_i
+      end
+      all.push(nums)
+    end
 
-  #   all
-  # end
-
-  # def read_input_to_number_array(file)
-  #   f = File.open(file, "r")
-  #   all = []
-
-  #   f.each_line do |line|
-  #     all << line.to_i
-  #   end
-
-  #   all.to_ary.flatten
-  # end
+    all
+  end
 end
