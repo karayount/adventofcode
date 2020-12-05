@@ -37,4 +37,8 @@ class Reader
 
     all
   end
+
+  def read_input_to_rooms(file)
+
+  end
 end
